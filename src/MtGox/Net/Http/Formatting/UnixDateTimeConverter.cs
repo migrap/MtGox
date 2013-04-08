@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 namespace MtGox.Net.Http.Formatting {
     public class UnixDateTimeConverter : DateTimeConverterBase {
         public override bool CanConvert(Type objectType) {
-            return typeof(DateTime).IsAssignableFrom(objectType);
+            return typeof(DateTimeOffset).IsAssignableFrom(objectType);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
             long val;
-            if (value is DateTime) {
-                val = ((DateTime)value).ToUnixTime();
+            if (value is DateTimeOffset) {
+                val = ((DateTimeOffset)value).ToUnixTime();
             }
             else {
                 throw new Exception("Expected date object value.");

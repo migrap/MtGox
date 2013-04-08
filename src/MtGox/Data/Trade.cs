@@ -11,7 +11,7 @@ namespace MtGox.Data {
         public double Amount { get; set; }
 
         [JsonProperty(PropertyName = "date")]
-        public DateTime DateTime { get; set; }
+        public DateTimeOffset DateTime { get; set; }
 
         [JsonProperty(PropertyName = "item")]
         public string Item { get; set; }

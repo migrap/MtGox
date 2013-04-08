@@ -70,6 +70,7 @@
     <Compile Include="Net\Http\Formatting\MarketConverter.cs" />
     <Compile Include="Net\Http\Formatting\MessageConverter.cs" />
     <Compile Include="Net\Http\Formatting\MtGoxMediaTypeFormatter.cs" />
+    <Compile Include="Net\Http\MtGoxDelegatingHandler.cs" />
     <Compile Include="Net\MtGoxClient.cs" />
     <Compile Include="Net\StreamingClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

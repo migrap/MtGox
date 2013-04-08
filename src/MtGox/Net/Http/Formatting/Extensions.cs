@@ -14,24 +14,23 @@ namespace MtGox.Net.Http.Formatting {
         }
 
         private const string InvalidUnixEpochErrorMessage = "Unix epoc starts January 1st, 1970";
+        private static readonly DateTimeOffset Epoch = new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
         /// <summary>
         ///   Convert a long into a DateTime
         /// </summary>
-        public static DateTime FromUnixTime(this Int64 self) {
-            var ret = new DateTime(1970, 1, 1);
-            return ret.AddSeconds(self);
+        public static DateTimeOffset FromUnixTime(this Int64 self) {
+            return Epoch.AddSeconds(self);
         }
 
         /// <summary>
         ///   Convert a DateTime into a long
         /// </summary>
-        public static Int64 ToUnixTime(this DateTime self) {
-            if (self == DateTime.MinValue) {
+        public static Int64 ToUnixTime(this DateTimeOffset self) {
+            if (self == DateTimeOffset.MinValue) {
                 return 0;
             }
 
-            var epoc = new DateTime(1970, 1, 1);
-            var delta = self - epoc;
+            var delta = self - Epoch;
 
             if (delta.TotalSeconds < 0) {
                 throw new ArgumentOutOfRangeException(InvalidUnixEpochErrorMessage);
