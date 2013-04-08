@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MtGox", "MtGox\MtGox.csproj", "{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alchemy", "..\..\..\..\Downloads\Alchemy-Websockets-master\src\Alchemy\Alchemy.csproj", "{45486CDE-86A3-4769-952F-E0821BF79493}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F18565ED-55B3-4018-9C9F-F5A14D1FD62A}.Release|x64.ActiveCfg = Release|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38A3DAE1-FAD5-4CCF-A101-9AF362AAF21D}.Release|x64.ActiveCfg = Release|Any CPU
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Debug|x64.ActiveCfg = Debug|x64
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Debug|x64.Build.0 = Debug|x64
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Release|x64.ActiveCfg = Release|x64
+		{45486CDE-86A3-4769-952F-E0821BF79493}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
