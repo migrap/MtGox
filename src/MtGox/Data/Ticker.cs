@@ -7,18 +7,24 @@ using System.Threading.Tasks;
 
 namespace MtGox.Data {
     public sealed class Ticker {
-        [JsonProperty("avg")]
-        public Average Average { get; set; }
-    }
+        public double High { get; set; }
 
-    public sealed class Average {
-        [JsonProperty("currency")]
-        public string Currency { get; set; }
+        public double Low { get; set; }
 
-        [JsonProperty("display")]
-        public string Display { get; set; }
+        public double Average { get; set; }
 
-        [JsonProperty("value")]
-        public double Value { get; set; }
+        public double Vwap { get; set; }
+
+        public double Volume { get; set; }
+
+        public double Last { get; set; }
+
+        public double Buy { get; set; }
+
+        public double Sell { get; set; }
+
+        public string Item { get; set; }
+
+        public DateTimeOffset Now { get; set; }
     }
 }

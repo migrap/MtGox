@@ -22,6 +22,10 @@ namespace MtGox.Net {
 
         private ISubject<Message> _messages = new Subject<Message>();
 
+        public IObservable<Message> Messages {
+            get { return _messages; }
+        }
+
         public IObservable<Trade> Trades {
             get { return _messages.Select(m => m.Data).OfType<Trade>(); }
         }

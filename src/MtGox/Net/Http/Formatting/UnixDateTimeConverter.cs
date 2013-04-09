@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace MtGox.Net.Http.Formatting {
     public class UnixDateTimeConverter : DateTimeConverterBase {
+        private static readonly DateTimeOffset Epoch = new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+
         public override bool CanConvert(Type objectType) {
             return typeof(DateTimeOffset).IsAssignableFrom(objectType);
         }
@@ -24,12 +26,18 @@ namespace MtGox.Net.Http.Formatting {
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-            if (reader.TokenType != JsonToken.Integer) {
-                throw new Exception("Wrong Token Type");
-            }
+            var value = reader.Value;
 
-            long ticks = (long)reader.Value;
-            return ticks.FromUnixTime();
+            long ticks = Convert.ToInt64(reader.Value);
+
+            switch (reader.TokenType) {
+                case JsonToken.String: 
+                    return Epoch.AddMilliseconds(ticks / 1000);
+                case JsonToken.Integer: 
+                    return Epoch.AddSeconds(ticks);
+                default: 
+                    throw new Exception("Invalid token type: Cannot convert to DateTime");
+            }
         }
     }
 }

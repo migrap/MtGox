@@ -35,8 +35,7 @@ namespace MtGox.Net.Http {
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) {
-            //"money/idkey\0nonce=635010287740861834"
-            var nonce = DateTime.Now.Ticks;            
+            var nonce = DateTime.Now.Ticks;
             var key = _key.GetString();
 
             var post = "{0}={1}".FormatWith("nonce", nonce);
@@ -47,25 +46,28 @@ namespace MtGox.Net.Http {
                 post = "{0}{1}".FormatWith(post, request.RequestUri.Query);
             }
 
-            var signature="{0}{1}{2}".FormatWith(prefix,Convert.ToChar(0),post);
+            var signature = "{0}{1}{2}".FormatWith(prefix, Convert.ToChar(0), post);
 
             var sign = GetHash(_secret, signature, Encoding.UTF8);
 
             request.Headers.Add("Rest-Key", key);
             request.Headers.Add("Rest-Sign", sign);
-            request.Headers.Add("Accept", "application/json, application/xml, text/json, text/x-json, text/javascript, text/xml");
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("User-Agent", _useragent);
-            request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
-                {"nonce",nonce.ToString()}
-            });
+
+            if (request.Method == HttpMethod.Post) {                
+                request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {
+                    {"nonce",nonce.ToString()}
+                });
+            }
 
             return base.SendAsync(request, cancellationToken);
         }
 
-        private static string GetHash(SecureString key, string value, Encoding encoding) {            
+        private static string GetHash(SecureString key, string value, Encoding encoding) {
             return GetHash(key.GetString(), value, encoding);
-        }        
-        
+        }
+
         private static string GetHash(string key, string value, Encoding encoding) {
             var hash = new HMACSHA512(Convert.FromBase64String(key));
             var buffer = encoding.GetBytes(value);

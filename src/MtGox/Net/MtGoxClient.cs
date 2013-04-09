@@ -1,5 +1,8 @@
 ﻿using MtGox.Configuration;
 using MtGox.Data;
+using MtGox.Models;
+using MtGox.Models.Info;
+using MtGox.Models.Ticker;
 using MtGox.Net.Http;
 using MtGox.Net.Http.Formatting;
 using System;
@@ -19,7 +22,7 @@ namespace MtGox.Net {
         private SecureString _key;
         private SecureString _secret;
 
-        public MtGoxClient(string scheme = "https", string host = "data.mtgox.com", int port = 443, string path = "api/2/money", string key = "", string secret = "") {
+        public MtGoxClient(string scheme = "https", string host = "data.mtgox.com", int port = 443, string path = "api", string key = "", string secret = "") {
             _handler = new MtGoxDelegatingHandler(key, secret);
             var builder = new UriBuilder { Scheme = scheme, Host = host, Port = port, Path = path };
 
@@ -51,20 +54,29 @@ namespace MtGox.Net {
                 .Unwrap();
         }
 
-        internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) {
+        internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, bool @private = false) {
             request.RequestUri = _http.BaseAddress.Append(request.RequestUri.OriginalString);
             return _http.SendAsync(request);
         }
 
-        private Task<T> GetAsync<T>(params object[] segments) {
-            var uri = segments.Join("/");
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            return SendAsync<T>(request);
+        //private Task<T> GetAsync<T>(params object[] segments) {
+        //    var uri = segments.Join("/");
+        //    var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        //    return SendAsync<T>(request);
+        //}
+
+        internal Task<T> GetAsync<T>(string path, object values = null) {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+              (null == values) ? path : "{0}?{1}".FormatWith(path, values.ToQueryString()));
+
+            return SendAsync(request)
+                .ContinueWith(x => x.Result.Content.ReadAsAsync<T>(_formatter))
+                .Unwrap();
         }
 
-        internal Task<T> PostAsync<T>(params object[] segments) {
-            var uri = segments.Join("/");            
-            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+        internal Task<T> PostAsync<T>(string path, object values = null) {
+            var request = new HttpRequestMessage(HttpMethod.Post,
+                (null == values) ? path : "{0}?{1}".FormatWith(path, values.ToQueryString()));
 
             return SendAsync(request)
                 .ContinueWith(x => x.Result.Content.ReadAsAsync<T>(_formatter))
@@ -72,11 +84,27 @@ namespace MtGox.Net {
         }
 
         public async Task<Idkey> GetIdkeyAsync() {
-            return await PostAsync<Idkey>("idkey");
+            return await PostAsync<Idkey>("money/idkey");
         }
 
-        public async Task<HttpResponseMessage> GetInfoAsync() {
-            return await PostAsync<HttpResponseMessage>("info");
+        public async Task<InfoResponse> GetInfoAsync() {
+            return await PostAsync<InfoResponse>("money/info");
+        }
+
+        public async Task<Ticker> GetTickerAsync(string symbol) {
+            return await GetAsync<TickerResponse>("BTC{0}/money/ticker".FormatWith(symbol))
+                .ContinueWith(x => new Ticker {
+                    Average = x.Result.Data.Average.Value,
+                    Buy = x.Result.Data.Buy.Value,
+                    High = x.Result.Data.High.Value,
+                    Item = x.Result.Data.Item,
+                    Last = x.Result.Data.Last.Value,
+                    Low = x.Result.Data.Low.Value,
+                    Now = x.Result.Data.Now,
+                    Sell = x.Result.Data.Sell.Value,
+                    Volume = x.Result.Data.Volume.Value,
+                    Vwap = x.Result.Data.Vwap.Value,
+                });
         }
     }
 }

@@ -10,7 +10,8 @@ namespace MtGox.Configuration {
         private string _scheme = "https";
         private string _host = "data.mtgox.com";
         private int _port = 443;
-        private string _path = "api/2/money";
+        //private string _path = "api/2/money";
+        private string _path = "api/2";
         private string _key;
         private string _secret;
 

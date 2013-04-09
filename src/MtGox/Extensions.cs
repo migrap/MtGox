@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -39,6 +40,10 @@ namespace MtGox {
         /// </summary>
         internal static string UrlEncode(this string self) {
             return Uri.EscapeDataString(self);            
+        }
+
+        internal static string UrlEncode(this object self) {
+            return UrlEncode(self.ToString());
         }
 
         internal static string GetString(this SecureString value) {
@@ -104,6 +109,31 @@ namespace MtGox {
 
         internal static Uri Append(this Uri self, params object[] segments) {
             return new Uri(segments.Aggregate(self.AbsoluteUri, (current, segment) => string.Format("{0}/{1}", current.TrimEnd('/'), segment)));
-        }    
+        }
+
+        internal static string Join(this IEnumerable<string> source, string seperator = "&") {
+            return string.Join(seperator, source);
+        }
+
+        internal static string ToQueryString(this object values) {
+            return (values == null) ? string.Empty : TypeDescriptor.GetProperties(values)
+                .Where(x => x.GetValue(values) != null)
+                .Select(x => string.Format("{0}={1}", x.Name.UrlEncode(), x.GetValue(values).UrlEncode()))
+                .Join();
+        }
+
+        internal static IEnumerable<TResult> Select<TResult>(this PropertyDescriptorCollection collection, Func<PropertyDescriptor, TResult> selector) {
+            foreach (PropertyDescriptor item in collection) {
+                yield return selector(item);
+            }
+        }
+
+        internal static IEnumerable<PropertyDescriptor> Where(this PropertyDescriptorCollection collection, Func<PropertyDescriptor, bool> predicate) {
+            foreach (PropertyDescriptor item in collection) {
+                if (predicate(item)) {
+                    yield return item;
+                }
+            }
+        }
     }
 }
