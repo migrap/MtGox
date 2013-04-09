@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,7 @@
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,14 +61,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\IMtGoxClientConfigurator.cs" />
+    <Compile Include="Configuration\MtGoxClientConfigurator.cs" />
     <Compile Include="Data\Depth.cs" />
+    <Compile Include="Data\Idkey.cs" />
     <Compile Include="Data\Market.cs" />
     <Compile Include="Data\Message.cs" />
     <Compile Include="Data\Ticker.cs" />
     <Compile Include="Data\Trade.cs" />
-    <Compile Include="Net\Extensions.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Net\Http\Formatting\UnixDateTimeConverter.cs" />
-    <Compile Include="Net\Http\Formatting\Extensions.cs" />
     <Compile Include="Net\Http\Formatting\MarketConverter.cs" />
     <Compile Include="Net\Http\Formatting\MessageConverter.cs" />
     <Compile Include="Net\Http\Formatting\MtGoxMediaTypeFormatter.cs" />
@@ -75,9 +79,7 @@
     <Compile Include="Net\StreamingClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

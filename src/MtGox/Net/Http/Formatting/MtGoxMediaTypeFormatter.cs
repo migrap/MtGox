@@ -24,5 +24,9 @@ namespace MtGox.Net.Http.Formatting {
         public override Task<object> ReadFromStreamAsync(Type type, System.IO.Stream readStream, System.Net.Http.HttpContent content, IFormatterLogger formatterLogger) {
             return base.ReadFromStreamAsync(type, readStream, content, formatterLogger);
         }
+
+        public override Task WriteToStreamAsync(Type type, object value, System.IO.Stream writeStream, System.Net.Http.HttpContent content, System.Net.TransportContext transportContext) {
+            return base.WriteToStreamAsync(type, value, writeStream, content, transportContext);
+        }
     }
 }
