@@ -50,10 +50,8 @@ namespace MtGox.Net.Http {
 
             var sign = GetHash(_secret, signature, Encoding.UTF8);
 
-            request.Headers.Add("Rest-Key", key);
             request.Headers.Add("Rest-Sign", sign);
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("User-Agent", _useragent);
+            request.Headers.Add("Accept", "application/json");            
 
             if (request.Method == HttpMethod.Post) {                
                 request.Content = new FormUrlEncodedContent(new Dictionary<string, string> {

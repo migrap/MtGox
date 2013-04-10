@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MtGox.Models.Ticker {
-    internal class TickerResponse {
+    public class TickerResponse {
         [JsonProperty("result")]
         public string Result { get; set; }
 
@@ -14,7 +14,7 @@ namespace MtGox.Models.Ticker {
         public Data Data { get; set; }
     }
 
-    internal class Data {
+    public class Data {
         [JsonProperty("high")]
         public Field High { get; set; }
 

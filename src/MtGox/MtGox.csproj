@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiException.cs" />
     <Compile Include="Configuration\IMtGoxClientConfigurator.cs" />
     <Compile Include="Configuration\MtGoxClientConfigurator.cs" />
     <Compile Include="Data\Depth.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Data\Ticker.cs" />
     <Compile Include="Data\Trade.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="HttpRequestMessageConfigurator.cs" />
+    <Compile Include="IHttpRequestMessageConfigurator.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\Info\InfoResponse.cs" />
     <Compile Include="Models\Ticker\TickerResponse.cs" />
@@ -79,8 +82,9 @@
     <Compile Include="Net\Http\Formatting\MarketConverter.cs" />
     <Compile Include="Net\Http\Formatting\MessageConverter.cs" />
     <Compile Include="Net\Http\Formatting\MtGoxMediaTypeFormatter.cs" />
+    <Compile Include="MtGoxClient.Money.cs" />
     <Compile Include="Net\Http\MtGoxDelegatingHandler.cs" />
-    <Compile Include="Net\MtGoxClient.cs" />
+    <Compile Include="MtGoxClient.cs" />
     <Compile Include="Net\StreamingClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

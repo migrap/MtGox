@@ -135,5 +135,11 @@ namespace MtGox {
                 }
             }
         }
+
+        public static async Task EnsureSuccessStatusCode(this HttpResponseMessage message, bool @throw = true) {
+            if (@throw && !message.IsSuccessStatusCode) {
+                throw new ApiException(message, "The API query failed with status code {0}: {1}".FormatWith(message.StatusCode, message.ReasonPhrase));
+            }
+        }
     }
 }
