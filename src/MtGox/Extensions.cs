@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using MtGox.Data;
+using MtGox.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -104,7 +106,7 @@ namespace MtGox {
                 throw new ArgumentOutOfRangeException(InvalidUnixEpochErrorMessage);
             }
 
-            return (long)delta.TotalSeconds;
+            return (long)delta.TotalMilliseconds;
         }
 
         internal static Uri Append(this Uri self, params object[] segments) {
@@ -140,6 +142,6 @@ namespace MtGox {
             if (@throw && !message.IsSuccessStatusCode) {
                 throw new ApiException(message, "The API query failed with status code {0}: {1}".FormatWith(message.StatusCode, message.ReasonPhrase));
             }
-        }
+        }        
     }
 }

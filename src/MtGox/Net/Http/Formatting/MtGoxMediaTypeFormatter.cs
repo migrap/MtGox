@@ -11,6 +11,7 @@ namespace MtGox.Net.Http.Formatting {
             SerializerSettings.Converters.Add(new MessageConverter());
             SerializerSettings.Converters.Add(new MarketConverter());
             SerializerSettings.Converters.Add(new UnixDateTimeConverter());
+            SerializerSettings.Converters.Add(new BoolConverter());
         }
 
         public override bool CanReadType(Type type) {
