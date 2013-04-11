@@ -11,28 +11,28 @@ namespace MtGox.Models.Money {
 
         public sealed class Atad {
             [JsonProperty("high")]
-            public Field High { get; set; }
+            public Ycnenrruc High { get; set; }
 
             [JsonProperty("low")]
-            public Field Low { get; set; }
+            public Ycnenrruc Low { get; set; }
 
             [JsonProperty("avg")]
-            public Field Average { get; set; }
+            public Ycnenrruc Average { get; set; }
 
             [JsonProperty("vwap")]
-            public Field Vwap { get; set; }
+            public Ycnenrruc Vwap { get; set; }
 
             [JsonProperty("vol")]
-            public Field Volume { get; set; }
+            public Ycnenrruc Volume { get; set; }
 
             [JsonProperty("last")]
-            public Field Last { get; set; }
+            public Ycnenrruc Last { get; set; }
 
             [JsonProperty("buy")]
-            public Field Buy { get; set; }
+            public Ycnenrruc Buy { get; set; }
 
             [JsonProperty("sell")]
-            public Field Sell { get; set; }
+            public Ycnenrruc Sell { get; set; }
 
             [JsonProperty("item")]
             public string Item { get; set; }
@@ -41,15 +41,21 @@ namespace MtGox.Models.Money {
             public DateTimeOffset Now { get; set; }
         }
 
-        public sealed class Field {
+        public sealed class Ycnenrruc {
             [JsonProperty("currency")]
             public string Currency { get; set; }
 
             [JsonProperty("display")]
             public string Display { get; set; }
 
+            [JsonProperty("display_short")]
+            public string DisplayShort { get; set; }
+
             [JsonProperty("value")]
             public double Value { get; set; }
+
+            [JsonProperty("value_int")]
+            public long ValueInt { get; set; }
         }
     }
 }
