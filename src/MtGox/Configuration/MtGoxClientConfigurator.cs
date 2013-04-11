@@ -1,10 +1,4 @@
-﻿using MtGox.Net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MtGox.Configuration {
     internal class MtGoxClientConfigurator : IMtGoxClientConfigurator {
         private string _scheme = "https";

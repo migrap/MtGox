@@ -1,18 +1,10 @@
 ﻿using MtGox.Configuration;
-using MtGox.Data;
-using MtGox.Models;
 using MtGox.Net.Http;
 using MtGox.Net.Http.Formatting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MtGox {

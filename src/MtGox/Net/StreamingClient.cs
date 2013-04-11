@@ -1,17 +1,16 @@
-﻿using MtGox.Net.Http.Formatting;
+﻿using MtGox.Data;
+using MtGox.Net.Http.Formatting;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Reactive.Linq;
-using System.Reactive.Concurrency;
-using MtGox.Data;
-using System.Reactive.Subjects;
 
 namespace MtGox.Net {
     public class StreamingClient {

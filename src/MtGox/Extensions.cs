@@ -1,6 +1,4 @@
-﻿using MtGox.Data;
-using MtGox.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -11,7 +9,6 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MtGox {
