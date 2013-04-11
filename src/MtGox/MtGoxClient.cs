@@ -1,13 +1,12 @@
 ﻿using MtGox.Configuration;
 using MtGox.Data;
 using MtGox.Models;
-using MtGox.Models.Info;
-using MtGox.Models.Ticker;
 using MtGox.Net.Http;
 using MtGox.Net.Http.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security;
@@ -20,7 +19,6 @@ namespace MtGox {
     public partial class MtGoxClient {
         private MtGoxMediaTypeFormatter _formatter = new MtGoxMediaTypeFormatter();
         private HttpClient _http;
-        private HttpMessageHandler _handler;
         private SecureString _key;
         private SecureString _secret;
 
@@ -31,12 +29,14 @@ namespace MtGox {
         }
 
         public MtGoxClient(string scheme = "https", string host = "data.mtgox.com", int port = 443, string path = "api", string key = "", string secret = "") {
-            _handler = new MtGoxDelegatingHandler(key, secret);
             var builder = new UriBuilder { Scheme = scheme, Host = host, Port = port, Path = path };
+            var handler = HmacDelegatingHandler.New(x=>{
+                x.Secret(secret);
+            });
 
-            _http = new HttpClient(_handler);
+            _http = new HttpClient(handler);
             _http.BaseAddress = builder.Uri;
-            _http.DefaultRequestHeaders.Add("User-Agent", "{0} {1}".FormatWith(typeof(MtGoxDelegatingHandler).Assembly.GetName().Name, typeof(MtGoxDelegatingHandler).Assembly.GetName().Version.ToString(4)));
+            _http.DefaultRequestHeaders.Add("User-Agent", "{0} {1}".FormatWith(typeof(MtGoxClient).Assembly.GetName().Name, typeof(MtGoxClient).Assembly.GetName().Version.ToString(4)));
             _http.DefaultRequestHeaders.Add("Rest-Key", key);
             _http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -62,6 +62,12 @@ namespace MtGox {
             return await SendAsync(HttpMethod.Get, x => {
                 x.Path(path);
                 x.Values(values);
+            });
+        }
+
+        private async Task<HttpResponseMessage> PostAsync(string path) {
+            return await SendAsync(HttpMethod.Post, x => {
+                x.Path(path);
             });
         }
     }

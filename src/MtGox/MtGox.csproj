@@ -75,20 +75,26 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="HttpRequestMessageConfigurator.cs" />
     <Compile Include="IHttpRequestMessageConfigurator.cs" />
-    <Compile Include="Models\Field.cs" />
-    <Compile Include="Models\Info\InfoResponse.cs" />
-    <Compile Include="Models\Ticker\TickerResponse.cs" />
+    <Compile Include="Models\Money\CurrencyResponse.cs" />
+    <Compile Include="Models\Money\DepthResponse.cs" />
+    <Compile Include="Models\Money\IdkeyResponse.cs" />
+    <Compile Include="Models\Money\InfoResponse.cs" />
+    <Compile Include="Models\Money\OrdersResponse.cs" />
+    <Compile Include="Models\Money\TickerResponse.cs" />
+    <Compile Include="Models\Money\TradesResponse.cs" />
+    <Compile Include="Net\Http\Formatting\BoolConverter.cs" />
     <Compile Include="Net\Http\Formatting\UnixDateTimeConverter.cs" />
     <Compile Include="Net\Http\Formatting\MarketConverter.cs" />
     <Compile Include="Net\Http\Formatting\MessageConverter.cs" />
     <Compile Include="Net\Http\Formatting\MtGoxMediaTypeFormatter.cs" />
     <Compile Include="MtGoxClient.Money.cs" />
-    <Compile Include="Net\Http\MtGoxDelegatingHandler.cs" />
+    <Compile Include="Net\Http\HmacDelegatingHandler.cs" />
+    <Compile Include="Net\Http\HmacDelegatingHandlerConfigurator.cs" />
+    <Compile Include="Net\Http\IHmacDelegatingHandlerConfigurator.cs" />
     <Compile Include="MtGoxClient.cs" />
     <Compile Include="Net\StreamingClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
