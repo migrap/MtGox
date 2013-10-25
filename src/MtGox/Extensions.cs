@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -38,7 +39,7 @@ namespace MtGox {
         /// http://blogs.msdn.com/b/yangxind/archive/2006/11/09/don-t-use-net-system-uri-unescapedatastring-in-url-decoding.aspx
         /// </summary>
         internal static string UrlEncode(this string self) {
-            return Uri.EscapeDataString(self);            
+            return Uri.EscapeDataString(self);
         }
 
         internal static string UrlEncode(this object self) {
@@ -46,7 +47,7 @@ namespace MtGox {
         }
 
         internal static string GetString(this SecureString value) {
-            if (null == value) {
+            if(null == value) {
                 throw new ArgumentNullException("value");
             }
 
@@ -55,19 +56,18 @@ namespace MtGox {
 
                 ptr = Marshal.SecureStringToGlobalAllocUnicode(value);
                 return Marshal.PtrToStringUni(ptr);
-            }
-            finally {
+            } finally {
                 Marshal.ZeroFreeGlobalAllocUnicode(ptr);
             }
         }
 
         internal static SecureString GetSecureString(this string value) {
-            if (null == value) {
+            if(null == value) {
                 throw new ArgumentNullException("value");
             }
 
             unsafe {
-                fixed (char* chars = value) {
+                fixed(char* chars = value) {
                     var secure = new SecureString(chars, value.Length);
                     secure.MakeReadOnly();
                     return secure;
@@ -87,19 +87,19 @@ namespace MtGox {
 
         private const string InvalidUnixEpochErrorMessage = "Unix epoc starts January 1st, 1970";
         private static readonly DateTimeOffset Epoch = new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
-        
+
         internal static DateTimeOffset FromUnixTime(this Int64 self) {
             return Epoch.AddSeconds(self);
         }
 
         internal static Int64 ToUnixTime(this DateTimeOffset self) {
-            if (self == DateTimeOffset.MinValue) {
+            if(self == DateTimeOffset.MinValue) {
                 return 0;
             }
 
             var delta = self - Epoch;
 
-            if (delta.TotalSeconds < 0) {
+            if(delta.TotalSeconds < 0) {
                 throw new ArgumentOutOfRangeException(InvalidUnixEpochErrorMessage);
             }
 
@@ -122,23 +122,27 @@ namespace MtGox {
         }
 
         internal static IEnumerable<TResult> Select<TResult>(this PropertyDescriptorCollection collection, Func<PropertyDescriptor, TResult> selector) {
-            foreach (PropertyDescriptor item in collection) {
+            foreach(PropertyDescriptor item in collection) {
                 yield return selector(item);
             }
         }
 
         internal static IEnumerable<PropertyDescriptor> Where(this PropertyDescriptorCollection collection, Func<PropertyDescriptor, bool> predicate) {
-            foreach (PropertyDescriptor item in collection) {
-                if (predicate(item)) {
+            foreach(PropertyDescriptor item in collection) {
+                if(predicate(item)) {
                     yield return item;
                 }
             }
         }
 
         public static async Task EnsureSuccessStatusCode(this HttpResponseMessage message, bool @throw = true) {
-            if (@throw && !message.IsSuccessStatusCode) {
+            if(@throw && !message.IsSuccessStatusCode) {
                 throw new ApiException(message, "The API query failed with status code {0}: {1}".FormatWith(message.StatusCode, message.ReasonPhrase));
             }
-        }        
+        }
+
+        internal static bool FieldExists(this JObject jObject, string fieldName) {
+            return jObject[fieldName] != null;
+        }
     }
 }
