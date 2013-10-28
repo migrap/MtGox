@@ -19,9 +19,9 @@ namespace MtGox.Json.Converters {
 
             serializer.Populate(jobject.CreateReader(), message);
 
-            if(message.Channel == "dbf1dee9-4f2e-4a08-8cb7-748919a71b21") {
+            if(message.Private.Equals("trade", StringComparison.InvariantCultureIgnoreCase)) {
                 message.Data = jobject["trade"].ToObject<Trade>();
-            } else if(message.Channel == "d5f06780-30a8-4a48-a2f8-7ed181b4a13f") {
+            } else if(message.Private.Equals("ticker", StringComparison.InvariantCultureIgnoreCase)) {
                 message.Data = jobject["ticker"].ToObject<Ticker>();
             }
 
