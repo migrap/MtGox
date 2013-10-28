@@ -12,6 +12,8 @@ using WebSocketSharp;
 using System.Reactive.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using MtGox.Json.Converters;
 
 namespace MtGox {
     public partial class MtGoxClient {
@@ -46,6 +48,7 @@ namespace MtGox {
             };
 
             _wocket.OnError += error = (s, e) => {
+                Trace.WriteLine(e.Message);
             };
 
             _wocket.OnMessage += message = (s, e) => {
@@ -53,6 +56,8 @@ namespace MtGox {
                 if(jobject.FieldExists("channel")) {
                     var m = JsonConvert.DeserializeObject<Message>(e.Data, Settings);
                     _observable.OnNext(m.Data);
+                } else {
+                    Trace.WriteLine(e.Data);
                 }
             };
 
@@ -74,7 +79,7 @@ namespace MtGox {
 
         private IObservable<T> GetObservable<T>(string eventname) {
             return (IObservable<T>)_messages.GetOrAdd(typeof(T), (type) => {
-                Subscribe("{0}.{1}".FormatWith(eventname, "BTC"));
+                Subscribe(eventname);
                 return _observable.OfType<T>();
             });
         }
@@ -85,7 +90,16 @@ namespace MtGox {
         }
 
         public IObservable<Trade> Trade {
-            get { return (IObservable<Trade>)GetObservable<Trade>("trade"); }
+            get { return (IObservable<Trade>)GetObservable<Trade>("trade.BTC"); }
         }
+
+        public IObservable<Ticker> Ticker {
+            get { return (IObservable<Ticker>)GetObservable<Ticker>("ticker.BTCUSD"); }
+        }
+
+        public IObservable<Ticker> Ricker {
+            get { return (IObservable<Ticker>)GetObservable<Ticker>("ticker.BTCEUR"); }
+        }
+
     }
 }

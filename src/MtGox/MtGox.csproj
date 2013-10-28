@@ -74,6 +74,9 @@
     <Compile Include="Data\Market.cs" />
     <Compile Include="Data\Message.cs" />
     <Compile Include="Data\Ticker.cs" />
+    <Compile Include="Json\Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Json\Converters\MessageConverter.cs" />
+    <Compile Include="Json\Converters\PrimaryConverter.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Ticker.cs" />
     <Compile Include="Data\Trade.cs" />

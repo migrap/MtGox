@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MtGox.Json.Converters;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -25,33 +26,5 @@ namespace MtGox.Models {
         public override string ToString() {
             return (new { Channel = Channel, Name = Name, Operation = Operation, Origin = Origin, Private = Private }).ToString();
         }
-    }
-
-    public class MessageConverter : JsonConverter{
-
-        public override bool CanConvert(Type objectType) {
-            return typeof(MessageConverter) == objectType;
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-            var message = new Message();
-            var jobject = JObject.Load(reader);
-
-            serializer.Populate(jobject.CreateReader(), message);
-
-            if(message.Channel == "dbf1dee9-4f2e-4a08-8cb7-748919a71b21") {
-                message.Data = jobject["trade"].ToObject(typeof(Trade));
-            }
-
-            return message;
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            
-        }
-
-        private bool FieldExists(string fieldName, JObject jObject) {
-            return jObject[fieldName] != null;
-        }
-    }
+    }    
 }
