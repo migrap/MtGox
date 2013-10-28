@@ -23,6 +23,8 @@ namespace MtGox.Json.Converters {
                 message.Data = jobject["trade"].ToObject<Trade>();
             } else if(message.Private.Equals("ticker", StringComparison.InvariantCultureIgnoreCase)) {
                 message.Data = jobject["ticker"].ToObject<Ticker>();
+            } else if(message.Private.Equals("depth", StringComparison.InvariantCultureIgnoreCase)) {
+                message.Data = jobject["depth"].ToObject<Depth>();
             }
 
             return message;

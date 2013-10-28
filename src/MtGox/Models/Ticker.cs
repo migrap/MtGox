@@ -33,10 +33,10 @@ namespace MtGox.Models {
 
         [JsonProperty("now")]
         [JsonConverter(typeof(DateTimeOffsetConverter))]
-        public DateTimeOffset Now { get; set; }
+        public DateTimeOffset Datetime { get; set; }
 
         public override string ToString() {
-            return (new { Now, Buy, Sell, Last, Volume, Average, High, Low, Vwap, Item }).ToString();
+            return (new { Datetime, Buy, Sell, Last, Volume, Average, High, Low, Vwap, Item }).ToString();
         }
     }
 }

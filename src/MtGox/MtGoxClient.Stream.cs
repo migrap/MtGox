@@ -94,6 +94,47 @@ namespace MtGox {
             configure(c);
             return c.Build();
         }
+
+        public IObservable<Depth> Depth(Action<IDepthConfigurator> configure) {
+            var c = new DepthConfigurator(this);
+            configure(c);
+            return c.Build();
+        }
+    }
+
+    public interface IDepthConfigurator {
+        IDepthConfigurator Item(string value);
+        IDepthConfigurator Currency(string value);
+    }
+
+    internal class DepthConfigurator : IDepthConfigurator {
+        private MtGoxClient _client;
+        private string _item;
+        private string _currency;
+
+        public DepthConfigurator(MtGoxClient client) {
+            _client = client;
+        }
+        public IDepthConfigurator Item(string value) {
+            _item = value;
+            return this;
+        }
+
+        public IDepthConfigurator Currency(string value){
+            _currency=value;
+            return this;
+        }
+
+        public IObservable<Depth> Build() {
+            var channel = "{0}.{1}{2}".FormatWith("depth", _item, _currency);
+            var observable = _client.Messages.Where(x => x.Name == channel)
+                .Select(x => x.Data)
+                .OfType<Depth>();
+
+            _client.Subscribe(channel);
+
+            return observable;
+        }
     }
 
     public interface ITradeConfigurator{
