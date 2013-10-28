@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using MtGox.Json.Converters;
+using MtGox.Configuration;
 
 namespace MtGox {
     public partial class MtGoxClient {
@@ -99,104 +100,6 @@ namespace MtGox {
             var c = new DepthConfigurator(this);
             configure(c);
             return c.Build();
-        }
-    }
-
-    public interface IDepthConfigurator {
-        IDepthConfigurator Item(string value);
-        IDepthConfigurator Currency(string value);
-    }
-
-    internal class DepthConfigurator : IDepthConfigurator {
-        private MtGoxClient _client;
-        private string _item;
-        private string _currency;
-
-        public DepthConfigurator(MtGoxClient client) {
-            _client = client;
-        }
-        public IDepthConfigurator Item(string value) {
-            _item = value;
-            return this;
-        }
-
-        public IDepthConfigurator Currency(string value){
-            _currency=value;
-            return this;
-        }
-
-        public IObservable<Depth> Build() {
-            var channel = "{0}.{1}{2}".FormatWith("depth", _item, _currency);
-            var observable = _client.Messages.Where(x => x.Name == channel)
-                .Select(x => x.Data)
-                .OfType<Depth>();
-
-            _client.Subscribe(channel);
-
-            return observable;
-        }
-    }
-
-    public interface ITradeConfigurator{
-        ITradeConfigurator Item(string value);
-    }
-
-    internal class TradeConfigurator : ITradeConfigurator {
-        private MtGoxClient _client;
-        private string _item;
-
-        public TradeConfigurator(MtGoxClient client) {
-            _client = client;
-        }
-        public ITradeConfigurator Item(string value) {
-            _item = value;
-            return this;
-        }
-
-        public IObservable<Trade> Build() {
-            var channel = "{0}.{1}".FormatWith("trade", _item);
-            var observable = _client.Messages.Where(x => x.Name == channel)
-                .Select(x => x.Data)
-                .OfType<Trade>();
-
-            _client.Subscribe(channel);
-
-            return observable;
-        }
-    }
-
-    public interface ITickerConfigurator {
-        ITickerConfigurator Item(string value);
-        ITickerConfigurator Currency(string value);
-    }
-
-    internal class TickerConfigurator : ITickerConfigurator {
-        private MtGoxClient _client;
-        private string _item;
-        private string _currency;
-        public TickerConfigurator(MtGoxClient client) {
-            _client = client;
-        }
-
-        public ITickerConfigurator Item(string value) {
-            _item= value;
-            return this;
-        }
-
-        public ITickerConfigurator Currency(string value) {
-            _currency = value;
-            return this;
-        }
-
-        public IObservable<Ticker> Build() {
-            var channel = "{0}.{1}{2}".FormatWith("ticker", _item, _currency);
-            var observable = _client.Messages.Where(x => x.Name == channel)
-                .Select(x => x.Data)
-                .OfType<Ticker>();
-
-            _client.Subscribe(channel);
-
-            return observable;
         }
     }
 }

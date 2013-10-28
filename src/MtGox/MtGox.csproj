@@ -67,8 +67,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiException.cs" />
+    <Compile Include="Configuration\DepthConfigurator.cs" />
+    <Compile Include="Configuration\IDepthConfigurator.cs" />
     <Compile Include="Configuration\IMtGoxClientConfigurator.cs" />
+    <Compile Include="Configuration\ITickerConfigurator.cs" />
+    <Compile Include="Configuration\ITradeConfigurator.cs" />
     <Compile Include="Configuration\MtGoxClientConfigurator.cs" />
+    <Compile Include="Configuration\TickerConfigurator.cs" />
+    <Compile Include="Configuration\TradeConfigurator.cs" />
     <Compile Include="Data\Depth.cs" />
     <Compile Include="Data\Idkey.cs" />
     <Compile Include="Data\Market.cs" />
